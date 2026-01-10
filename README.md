@@ -66,3 +66,108 @@ sudo bash wazuh-install.sh -a
 # Utilisateur par défaut : admin
 # Mot de passe initial  : affiché à l'écran
 # ⚠️ Noter ces informations pour la première connexion
+
+Vérification des services
+# Vérifier l’état des services Wazuh
+sudo systemctl status wazuh-manager
+sudo systemctl status wazuh-indexer
+sudo systemctl status wazuh-dashboard
+
+# Les services doivent être en état : active (running)
+
+Accès au Dashboard
+https://<IP_DU_SERVEUR_WAZUH>
+
+
+Le dashboard permet :
+
+La gestion des agents
+
+La visualisation des alertes
+
+L’analyse des événements de sécurité
+
+Le threat hunting
+
+Enrôlement des agents
+Client Linux
+Wazuh Dashboard
+→ Agents Management
+→ Deploy new agent
+→ Sélectionner Linux
+→ Copier et exécuter les commandes proposées
+
+Client Windows
+# Exécuter dans PowerShell (Administrateur)
+# Les commandes sont fournies par le Dashboard
+
+
+Vérifier que le service est actif :
+
+Services → Wazuh Agent → Running
+
+Scénarios de démonstration
+SIEM – Linux
+# Tentatives SSH échouées
+ssh fakeuser@IP_LINUX_CLIENT
+
+# Élévation de privilèges
+sudo su
+
+# Modification de fichier sensible (FIM)
+echo "test" | sudo tee -a /etc/passwd
+
+EDR – Windows
+# Création d’un utilisateur local
+net user labuser P@ssw0rd! /add
+net localgroup administrators labuser /add
+
+
+Autres actions :
+
+Tentatives RDP avec mauvais mot de passe
+
+(Optionnel) Installation de Sysmon pour enrichir l’EDR
+
+Visualisation des alertes
+Wazuh Dashboard
+→ Security Events
+→ Threat Hunting
+
+
+Filtres utiles :
+
+Agent (Linux / Windows)
+
+SSH / authentication_failed
+
+Windows Security
+
+User added / Group changed
+
+Sysmon (process creation, network connection)
+
+Livrables attendus
+1. Capture : Agents Linux & Windows actifs
+2. Alerte SSH (Linux)
+3. Alerte Failed Logon (Windows)
+4. Alerte User / Group change (Windows)
+5. Schéma VPC + instances + Security Groups
+6. Rapport :
+   - SIEM vs EDR
+   - IAM / PAM
+   - Threat hunting (3 requêtes)
+
+Conclusion
+
+Ce TP fournit une approche pratique d’un SOC moderne, combinant SIEM et EDR
+dans un environnement Cloud réaliste.
+
+
+---
+
+Si tu veux, je peux maintenant :
+- 🔹 transformer ce README en **script TP étudiant**
+- 🔹 fournir un **README formateur**
+- 🔹 ajouter un **schéma réseau en ASCII ou Mermaid**
+- 🔹 faire une **version très courte (1 page)**
