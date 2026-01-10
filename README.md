@@ -1,20 +1,19 @@
 # Atelier – Sécurité des Endpoints & Supervision SIEM (Wazuh)
 
 ## Présentation
-Ce laboratoire a pour objectif de déployer et d’utiliser une plateforme **Wazuh** afin de superviser des systèmes **Linux et Windows**.  
-Wazuh est utilisé comme solution **SIEM** (collecte et corrélation de logs) et **EDR** (détection d’activités suspectes sur les endpoints).
-
-L’environnement est déployé sur **AWS Learner Lab** et reproduit une architecture SOC simplifiée.
+Ce laboratoire vise à déployer une plateforme **Wazuh** afin de superviser la sécurité
+des endpoints **Linux** et **Windows**.  
+Wazuh est utilisé comme solution **SIEM** et **EDR** dans un environnement Cloud
+hébergé sur **AWS Learner Lab**.
 
 ---
 
 ## Objectifs
-À l’issue de ce TP, l’étudiant sera capable de :
-- Déployer un serveur **Wazuh All-in-One**
+- Déployer un serveur Wazuh All‑in‑One
 - Enrôler des agents Linux et Windows
-- Observer des événements de sécurité en temps réel
-- Comprendre les différences entre **SIEM** et **EDR**
-- Analyser des alertes liées à l’IAM et aux actions utilisateurs
+- Générer et analyser des événements de sécurité
+- Comprendre les concepts SIEM, EDR et IAM
+- S’initier au threat hunting
 
 ---
 
@@ -32,20 +31,20 @@ L’environnement est déployé sur **AWS Learner Lab** et reproduit une archite
   - (Optionnel) Sysmon
 
 ### Flux & Ports
-| Source | Destination | Port | Description |
-|------|------------|------|-------------|
-| Agents | Wazuh Server | 1514/TCP | Communication des logs |
-| Agents | Wazuh Server | 1515/TCP | Enrôlement automatique |
-| Client | Wazuh Server | 443/TCP | Accès Dashboard |
-| Admin | Linux Client | 22/TCP | SSH |
-| Admin | Windows Client | 3389/TCP | RDP |
+- Agents → Wazuh Server : `1514/TCP`
+- Enrôlement agents : `1515/TCP`
+- Accès Dashboard : `443/TCP`
+- SSH Linux : `22/TCP`
+- RDP Windows : `3389/TCP`
 
 ---
 
 ## Prérequis
-- Compte **AWS Learner Lab** actif
+- Compte AWS Learner Lab actif
 - 3 instances EC2 dans le même VPC
 - Accès administrateur sur les machines
+- Accès Internet sortant autorisé
+
 ---
 
 ## Déploiement du serveur Wazuh
@@ -53,6 +52,17 @@ L’environnement est déployé sur **AWS Learner Lab** et reproduit une archite
 Sur l’instance **Ubuntu (Wazuh Server)** :
 
 ```bash
+# Mise à jour du système
 sudo apt update && sudo apt -y upgrade
+
+# Téléchargement du script officiel Wazuh
 curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
+
+# Installation Wazuh All-in-One
 sudo bash wazuh-install.sh -a
+
+# --- Informations de connexion (affichées à la fin du script) ---
+# URL du Wazuh Dashboard : https://<IP_DU_SERVEUR_WAZUH>
+# Utilisateur par défaut : admin
+# Mot de passe initial  : affiché à l'écran
+# ⚠️ Noter ces informations pour la première connexion
