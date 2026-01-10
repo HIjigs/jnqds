@@ -46,9 +46,6 @@ L’environnement est déployé sur **AWS Learner Lab** et reproduit une archite
 - Compte **AWS Learner Lab** actif
 - 3 instances EC2 dans le même VPC
 - Accès administrateur sur les machines
-- Connexion Internet sortante autorisée
-- Navigateur web moderne (Firefox / Chrome)
-
 ---
 
 ## Déploiement du serveur Wazuh
